@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "University Website"
+description = "The university's public website for prospective students, with program discovery, colleges, admissions information, and an on-page assistant."
+version = "1.0.0"
+id = "artifacts/university-site"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 20145
+
+[services.development]
+run = "pnpm --filter @workspace/university-site run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/university-site", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/university-site/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "20145"
+BASE_PATH = "/"
