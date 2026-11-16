@@ -33,7 +33,7 @@ export function StudentIntent() {
           <div className="max-w-4xl mb-16">
             <p className="font-display text-2xl md:text-3xl lg:text-4xl text-stone-800 leading-snug font-normal">
               Whether you know exactly what you want to study or you're just
-              starting to explore, we'll help you find your path at NGAI
+              starting to explore, we'll help you find your path at Tech
               University.
             </p>
           </div>
@@ -85,7 +85,7 @@ export function StudentIntent() {
 
           <Reveal delay={160}>
             <a
-              href="#assistant"
+              href="#programs"
               className="group block bg-white p-8 lg:p-10 hover:bg-stone-50 transition-colors h-full"
             >
               <div className="w-12 h-12 rounded-full bg-cardinal-50 border border-cardinal-100 flex items-center justify-center mb-6">
@@ -95,10 +95,10 @@ export function StudentIntent() {
                 Not Sure What to Study?
               </h3>
               <p className="text-sm text-stone-600 leading-relaxed mb-6">
-                Talk to the NGAI Assistant. We'll guide you to programs that fit.
+                Explore guidance for programs that fit.
               </p>
               <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-cardinal-700 group-hover:gap-2.5 transition-all">
-                Get guidance
+                Explore programs
                 <ArrowRight className="w-3.5 h-3.5" />
               </span>
             </a>

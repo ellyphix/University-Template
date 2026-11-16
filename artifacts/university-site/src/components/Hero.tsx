@@ -8,7 +8,7 @@ export function Hero() {
       <div className="absolute inset-0">
         <img
           src="https://images.pexels.com/photos/12610212/pexels-photo-12610212.jpeg?auto=compress&cs=tinysrgb&w=1920"
-          alt="NGAI University campus"
+          alt="University campus"
           className="w-full h-full object-cover"
           loading="eager"
         />
@@ -29,7 +29,7 @@ export function Hero() {
 
           <Reveal delay={100}>
             <h1 className="font-display font-bold text-5xl md:text-7xl lg:text-8xl text-white leading-[1.05] mb-6">
-              NGAI<br />
+              Tech<br />
               University
             </h1>
           </Reveal>
@@ -48,7 +48,7 @@ export function Hero() {
                 href="#admissions"
                 className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-cardinal-600 text-white font-semibold text-sm rounded-sm hover:bg-cardinal-700 transition-all hover:gap-3"
               >
-                Apply to NGAI
+                Apply to Tech University
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
               </a>
               <a

@@ -6,6 +6,7 @@ interface Program {
   name: string;
   type: string;
   college: string;
+  target: string;
 }
 
 const colleges = [
@@ -19,15 +20,15 @@ const colleges = [
 ];
 
 const programs: Program[] = [
-  { name: 'AI & Digital Business', type: 'College', college: 'AI & Digital Business' },
-  { name: 'Robotics & Automation', type: 'College', college: 'Robotics & Automation' },
-  { name: 'Gaming & Simulation', type: 'College', college: 'Gaming & Simulation' },
-  { name: 'Sports & Media Tech', type: 'College', college: 'Sports & Media Tech' },
-  { name: 'Business & Consulting', type: 'College', college: 'Business & Consulting' },
-  { name: 'ACIM — Belt Certification', type: 'Academy', college: 'Certification Academies' },
-  { name: 'AICTAaaS', type: 'Academy', college: 'Certification Academies' },
-  { name: 'NGAI Software Academy', type: 'Academy', college: 'Certification Academies' },
-  { name: 'Partner Academy', type: 'Academy', college: 'Certification Academies' },
+  { name: 'AI & Digital Business', type: 'College', college: 'AI & Digital Business', target: '#college-ai-and-digital-business' },
+  { name: 'Robotics & Automation', type: 'College', college: 'Robotics & Automation', target: '#college-robotics-and-automation' },
+  { name: 'Gaming & Simulation', type: 'College', college: 'Gaming & Simulation', target: '#college-gaming-and-simulation' },
+  { name: 'Sports & Media Tech', type: 'College', college: 'Sports & Media Tech', target: '#college-sports-and-media-tech' },
+  { name: 'Business & Consulting', type: 'College', college: 'Business & Consulting', target: '#college-business-and-consulting' },
+  { name: 'ACIM — Belt Certification', type: 'Academy', college: 'Certification Academies', target: '#academy-acim' },
+  { name: 'AICTAaaS', type: 'Academy', college: 'Certification Academies', target: '#academy-aictaaas' },
+  { name: 'Tech Software Academy', type: 'Academy', college: 'Certification Academies', target: '#academy-tech-software' },
+  { name: 'Partner Academy', type: 'Academy', college: 'Certification Academies', target: '#academy-partner-academy' },
 ];
 
 export function ProgramDiscovery() {
@@ -46,7 +47,7 @@ export function ProgramDiscovery() {
               Academics
             </span>
             <h2 className="font-display font-bold text-4xl md:text-5xl lg:text-6xl text-stone-900 mb-4">
-              Programs at NGAI
+              Programs at Tech University
             </h2>
             <p className="text-lg text-stone-600 max-w-2xl leading-relaxed">
               Browse programs across our five colleges and four certification
@@ -80,7 +81,7 @@ export function ProgramDiscovery() {
           {filtered.map((program, i) => (
             <Reveal key={program.name} delay={i * 40}>
               <a
-                href="#programs"
+                href={program.target}
                 className="group flex items-center justify-between py-6 hover:bg-white px-4 -mx-4 rounded-sm transition-colors"
               >
                 <div className="flex items-center gap-6 min-w-0">

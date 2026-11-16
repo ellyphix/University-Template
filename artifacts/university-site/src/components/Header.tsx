@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { type FormEvent, useEffect, useState } from 'react';
 import { Search, Menu, X, ChevronDown, Plus } from 'lucide-react';
 
 interface HeaderProps {
@@ -6,11 +6,11 @@ interface HeaderProps {
 }
 
 const topNav = [
-  { label: 'Students', href: '#' },
-  { label: 'Faculty', href: '#' },
-  { label: 'Staff', href: '#' },
-  { label: 'Alumni', href: '#' },
-  { label: 'Partners', href: '#' },
+  { label: 'Students', href: '#intent' },
+  { label: 'Faculty', href: '#about' },
+  { label: 'Staff', href: '#about' },
+  { label: 'Alumni', href: '#about' },
+  { label: 'Partners', href: '#about' },
 ];
 
 const mainNav = [
@@ -19,7 +19,7 @@ const mainNav = [
     href: '#programs',
     children: [
       { heading: 'Colleges', links: ['AI & Digital Business', 'Robotics & Automation', 'Gaming & Simulation', 'Sports & Media Tech', 'Business & Consulting'] },
-      { heading: 'Certification Academies', links: ['ACIM', 'AICTAaaS', 'NGAI Software', 'Partner Academy'] },
+      { heading: 'Certification Academies', links: ['ACIM', 'AICTAaaS', 'Tech Software', 'Partner Academy'] },
     ],
   },
   {
@@ -40,10 +40,34 @@ const mainNav = [
   },
 ];
 
+function makeAnchorId(prefix: string, value: string) {
+  return `${prefix}-${value.toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`;
+}
+
+function getMenuHref(heading: string, label: string) {
+  if (heading === 'Colleges') return `#${makeAnchorId('college', label)}`;
+  if (heading === 'Certification Academies') return `#${makeAnchorId('academy', label)}`;
+
+  if (heading === 'Apply') {
+    const admissionsTargets: Record<string, string> = {
+      'How to Apply': '#admissions-how-to-apply',
+      Requirements: '#admissions-requirements',
+      'Key Dates': '#admissions-key-dates',
+      FAQ: '#admissions-faq',
+    };
+    return admissionsTargets[label] ?? '#admissions';
+  }
+
+  if (heading === 'Cost & Aid') return '#admissions-tuition-financial-aid';
+  return '#about';
+}
+
 export function Header({ activeSection }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchMessage, setSearchMessage] = useState('');
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileSubmenu, setMobileSubmenu] = useState<string | null>(null);
 
@@ -59,6 +83,27 @@ export function Header({ activeSection }: HeaderProps) {
     return () => { document.body.style.overflow = ''; };
   }, [mobileOpen]);
 
+  const handleSearch = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const query = searchQuery.trim().toLowerCase();
+    if (!query) {
+      setSearchMessage('Enter a topic to search.');
+      return;
+    }
+
+    const match = Array.from(document.querySelectorAll<HTMLElement>('main section, footer'))
+      .find((section) => section.innerText.toLowerCase().includes(query));
+    if (!match) {
+      setSearchMessage('No matching content found. Try a program, college, or admissions topic.');
+      return;
+    }
+
+    setSearchMessage('');
+    setSearchOpen(false);
+    match.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (match.id) window.history.replaceState(null, '', `#${match.id}`);
+  };
+
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-50">
@@ -73,9 +118,9 @@ export function Header({ activeSection }: HeaderProps) {
               ))}
             </nav>
             <div className="flex items-center gap-4">
-              <a href="#" className="text-xs font-medium tracking-wide hover:text-white transition-colors">Student Portal</a>
+              <a href="#programs" className="text-xs font-medium tracking-wide hover:text-white transition-colors">Program Finder</a>
               <span className="w-px h-3 bg-stone-700" />
-              <a href="#" className="text-xs font-medium tracking-wide hover:text-white transition-colors">Sign In</a>
+              <a href="#about" className="text-xs font-medium tracking-wide hover:text-white transition-colors">Contact</a>
             </div>
           </div>
         </div>
@@ -87,14 +132,14 @@ export function Header({ activeSection }: HeaderProps) {
               {/* Logo */}
               <a href="#home" className="flex items-center gap-3 shrink-0">
                 <div className="w-11 h-11 rounded-full bg-cardinal-600 flex items-center justify-center shrink-0">
-                  <span className="font-display font-bold text-white text-xl leading-none">N</span>
+                    <span className="font-display font-bold text-white text-xl leading-none">T</span>
                 </div>
                 <div>
                   <div className="font-display font-bold text-stone-900 text-lg leading-tight tracking-tight">
-                    NGAI University
+                    Tech University
                   </div>
                   <div className="text-[10px] text-stone-500 leading-tight tracking-widest uppercase">
-                    Next Generation AI
+                    Technology &amp; Innovation
                   </div>
                 </div>
               </a>
@@ -133,7 +178,7 @@ export function Header({ activeSection }: HeaderProps) {
                                 <ul className="space-y-2.5">
                                   {col.links.map((link) => (
                                     <li key={link}>
-                                      <a href="#" className="text-sm text-stone-700 hover:text-cardinal-700 transition-colors block">
+                                      <a href={getMenuHref(col.heading, link)} className="text-sm text-stone-700 hover:text-cardinal-700 transition-colors block">
                                         {link}
                                       </a>
                                     </li>
@@ -179,18 +224,26 @@ export function Header({ activeSection }: HeaderProps) {
           {searchOpen && (
             <div className="border-t border-stone-200 bg-white">
               <div className="max-w-7xl mx-auto px-6 lg:px-8 py-5">
-                <div className="flex items-center gap-4">
+                <form onSubmit={handleSearch} className="flex items-center gap-4">
                   <Search className="w-5 h-5 text-stone-400 shrink-0" />
                   <input
                     type="text"
-                    placeholder="Search NGAI University..."
+                    placeholder="Search Tech University..."
+                    value={searchQuery}
+                    aria-label="Search the website"
+                    onChange={(event) => {
+                      setSearchQuery(event.target.value);
+                      setSearchMessage('');
+                    }}
                     className="flex-1 text-base bg-transparent outline-none placeholder:text-stone-400 text-stone-900"
                     autoFocus
                   />
-                  <button onClick={() => setSearchOpen(false)} className="p-1 text-stone-400 hover:text-stone-900" aria-label="Close search">
+                  <button type="submit" className="text-sm font-semibold text-cardinal-700 hover:text-cardinal-900">Search</button>
+                  <button type="button" onClick={() => { setSearchOpen(false); setSearchMessage(''); }} className="p-1 text-stone-400 hover:text-stone-900" aria-label="Close search">
                     <X className="w-5 h-5" />
                   </button>
-                </div>
+                </form>
+                {searchMessage && <p role="status" className="mt-3 pl-9 text-sm text-stone-600">{searchMessage}</p>}
               </div>
             </div>
           )}
@@ -226,7 +279,7 @@ export function Header({ activeSection }: HeaderProps) {
                           <ul className="space-y-2">
                             {col.links.map((link) => (
                               <li key={link}>
-                                <a href="#" onClick={() => setMobileOpen(false)} className="text-sm text-stone-700 hover:text-cardinal-700 transition-colors block py-1">
+                                <a href={getMenuHref(col.heading, link)} onClick={() => setMobileOpen(false)} className="text-sm text-stone-700 hover:text-cardinal-700 transition-colors block py-1">
                                   {link}
                                 </a>
                               </li>

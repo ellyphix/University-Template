@@ -11,10 +11,10 @@ export function AIAssistant() {
             <Reveal>
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 rounded-full bg-cardinal-600 flex items-center justify-center">
-                  <span className="font-display font-bold text-white text-sm">NG</span>
+                  <span className="font-display font-bold text-white text-sm">TU</span>
                 </div>
                 <div>
-                  <div className="text-sm font-bold text-stone-900">NGAI Assistant</div>
+                  <div className="text-sm font-bold text-stone-900">Tech University Assistant</div>
                   <div className="text-xs text-stone-500">Site-intelligent guidance</div>
                 </div>
               </div>
@@ -28,19 +28,18 @@ export function AIAssistant() {
 
             <Reveal delay={150}>
               <p className="text-lg text-stone-600 leading-relaxed mb-8 max-w-md">
-                The NGAI Assistant uses conversational AI with full knowledge of
-                our site — colleges, academies, admissions, and partners.
-                Ask it anything. It will guide you to the right program, no
-                organizational chart required.
+                This sample conversation shows how a Tech University guide could
+                help visitors compare programs and understand admissions. The
+                chat is a preview; use the program finder to explore the site.
               </p>
             </Reveal>
 
             <Reveal delay={200}>
               <a
-                href="#assistant"
+                href="#programs"
                 className="group inline-flex items-center gap-2 px-7 py-3.5 bg-cardinal-600 text-white font-semibold text-sm rounded-sm hover:bg-cardinal-700 transition-all hover:gap-3"
               >
-                Start a conversation
+                Explore Programs
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
               </a>
             </Reveal>
@@ -60,7 +59,7 @@ export function AIAssistant() {
 
                 <div className="flex justify-start gap-3">
                   <div className="w-8 h-8 rounded-full bg-cardinal-600 flex items-center justify-center shrink-0">
-                    <span className="font-display font-bold text-white text-xs">NG</span>
+                    <span className="font-display font-bold text-white text-xs">TU</span>
                   </div>
                   <div className="max-w-[80%] px-5 py-3 bg-cardinal-50 border border-cardinal-100 rounded-sm rounded-tl-none">
                     <p className="text-sm text-stone-900 leading-relaxed">
@@ -79,7 +78,7 @@ export function AIAssistant() {
 
                 <div className="flex justify-start gap-3">
                   <div className="w-8 h-8 rounded-full bg-cardinal-600 flex items-center justify-center shrink-0">
-                    <span className="font-display font-bold text-white text-xs">NG</span>
+                    <span className="font-display font-bold text-white text-xs">TU</span>
                   </div>
                   <div className="px-5 py-4 bg-cardinal-50 border border-cardinal-100 rounded-sm rounded-tl-none flex items-center gap-1.5">
                     <span className="w-2 h-2 rounded-full bg-cardinal-400 animate-pulse" />

@@ -1,4 +1,3 @@
-import { ArrowRight } from 'lucide-react';
 import { Reveal } from './Reveal';
 
 interface College {
@@ -38,9 +37,13 @@ const colleges: College[] = [
 const academies = [
   { name: 'ACIM', description: 'Belt pathway certification — the Trusted Advisors belt certification program.' },
   { name: 'AICTAaaS', description: 'AI Consulting & Trusted Advisor certification as a service.' },
-  { name: 'NGAI Software', description: 'Software development and engineering certification tracks.' },
+  { name: 'Tech Software', description: 'Software development and engineering certification tracks.' },
   { name: 'Partner Academy', description: 'Partner intake, enablement, and certification programs.' },
 ];
+
+function makeAnchorId(prefix: string, value: string) {
+  return `${prefix}-${value.toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`;
+}
 
 export function Colleges() {
   return (
@@ -68,9 +71,9 @@ export function Colleges() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {colleges.map((college, i) => (
               <Reveal key={college.name} delay={i * 60}>
-                <a
-                  href="#academies"
-                  className="group block bg-white border border-stone-200 rounded-sm overflow-hidden hover:shadow-lg transition-all duration-300"
+                <div
+                  id={makeAnchorId('college', college.name)}
+                  className="block bg-white border border-stone-200 rounded-sm overflow-hidden scroll-mt-28"
                 >
                   <div className="aspect-[16/10] overflow-hidden bg-stone-200">
                     <img
@@ -81,18 +84,14 @@ export function Colleges() {
                     />
                   </div>
                   <div className="p-6 lg:p-7">
-                    <h3 className="font-display font-bold text-xl text-stone-900 mb-2 group-hover:text-cardinal-700 transition-colors">
+                    <h3 className="font-display font-bold text-xl text-stone-900 mb-2">
                       {college.name}
                     </h3>
                     <p className="text-sm text-stone-600 leading-relaxed mb-4">
                       {college.description}
                     </p>
-                    <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-cardinal-700 group-hover:gap-2.5 transition-all">
-                      Explore
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </span>
                   </div>
-                </a>
+                </div>
               </Reveal>
             ))}
           </div>
@@ -119,20 +118,19 @@ export function Colleges() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {academies.map((academy, i) => (
               <Reveal key={academy.name} delay={i * 80}>
-                <a
-                  href="#academies"
-                  className="group block bg-white border border-stone-200 rounded-sm p-8 lg:p-10 hover:border-cardinal-200 hover:shadow-lg transition-all"
+                <div
+                  id={makeAnchorId('academy', academy.name)}
+                  className="block bg-white border border-stone-200 rounded-sm p-8 lg:p-10 scroll-mt-28"
                 >
                   <div className="flex items-start justify-between mb-4">
-                    <h3 className="font-display font-bold text-2xl text-stone-900 group-hover:text-cardinal-700 transition-colors">
+                    <h3 className="font-display font-bold text-2xl text-stone-900">
                       {academy.name}
                     </h3>
-                    <ArrowRight className="w-5 h-5 text-stone-300 group-hover:text-cardinal-600 group-hover:translate-x-1 transition-all" />
                   </div>
                   <p className="text-stone-600 leading-relaxed">
                     {academy.description}
                   </p>
-                </a>
+                </div>
               </Reveal>
             ))}
           </div>
